@@ -2,7 +2,7 @@
 import {Line} from "vue-chartjs";
 import axios from "axios";
 import dateParser from "@/mixins/DateParser";
-import scaling from "@/mixins/Scaling"
+import scaling from "@/mixins/Scaling";
 
 export default {
   extends: Line,
@@ -10,22 +10,11 @@ export default {
 
   data() {
     return {
-      scaleMin: 0,
-      scaleMax: 30,
       gradient: null,
-      temperatureData: [],
+      scaleMin: 0,
+      scaleMax: 100,
       timeLabels: [],
-      temperatureColors: {
-        "-10": "rgb(0,94,255)",
-        "-5": "rgb(0,115,255)",
-        "0": "rgb(0,149,255)",
-        "5": "rgb(0,234,255)",
-        "10": "rgb(0,234,255)",
-        "15": "rgb(255,221,0)",
-        "20": "rgb(255,200,0)",
-        "25": "rgb(255,119,0)",
-        "30": "rgb(255,0,0)"
-      },
+      rainData: []
     }
   },
 
@@ -34,16 +23,24 @@ export default {
     let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
     now.setHours(now.getHours() - 10)
     let end = this.formatDate(now, "YYYYMMDD-hhmmss")
-    this.loadTemperatureData(begin, end)
+    this.loadRainData(begin, end)
   },
 
   mounted() {
+    this.gradient = this.$refs.canvas
+        .getContext("2d")
+        .createLinearGradient(0, 0, 0, 450);
+
+    this.gradient.addColorStop(0, "rgb(2,127,241)");
+    this.gradient.addColorStop(0.5, "rgb(2,127,241)");
+    this.gradient.addColorStop(1, "rgb(224,239,255)");
+
     this.updateChart()
   },
 
   methods: {
 
-    loadTemperatureData(begin, end) {
+    loadRainData(begin, end) {
       axios
           .get('https://8tx41fy5r8.execute-api.eu-central-1.amazonaws.com/api/weather', {
             params: {
@@ -52,58 +49,39 @@ export default {
             }
           })
           .then(response => {
-            let min = response.data[0].temperature
-            let max = response.data[0].temperature
+            let max = 0
+            let min = response.data[0].rain
             response.data.forEach((entry, i) => {
               let date = this.convertStringToDate(entry.timestamp)
               this.timeLabels[i] = this.formatDate(date, "hh:mm")
-              this.temperatureData[i] = entry.temperature
+              this.rainData[i] = entry.rain
 
-              if (entry.temperature < min) {
-                min = entry.temperature
+              if (entry.rain < min) {
+                min = entry.rain
               }
-              if (entry.temperature > max) {
-                max = entry.temperature
+              if (entry.rain > max) {
+                max = entry.rain
               }
+              this.scaleMin = this.scaleDown(min, 10, 0)
+              this.scaleMax = this.scaleUp(max, 10)
             })
-
-            this.scaleMin = this.scaleDown(min, 5)
-            this.scaleMax = this.scaleUp(max, 5)
             this.updateChart()
           })
     },
 
-    updateGradient() {
-      this.gradient = this.$refs.canvas
-          .getContext("2d")
-          .createLinearGradient(0, 0, 0, 450);
-
-      if (this.scaleMax > 30) {
-        this.gradient.addColorStop(0, this.temperatureColors["30"]);
-      } else {
-        this.gradient.addColorStop(0, this.temperatureColors[this.scaleMax]);
-      }
-      if (this.scaleMin < -10) {
-        this.gradient.addColorStop(1, this.temperatureColors["-10"]);
-      } else {
-        this.gradient.addColorStop(1, this.temperatureColors[this.scaleMin]);
-      }
-    },
-
     updateChart() {
-      this.updateGradient()
       this.renderChart(
           {
             labels: this.timeLabels,
             datasets: [
               {
-                label: "Temperature",
-                borderColor: "#000000",
+                label: "Rain",
+                borderColor: "#027ff1",
                 pointBackgroundColor: "white",
                 borderWidth: 1,
                 pointBorderColor: "white",
                 backgroundColor: this.gradient,
-                data: this.temperatureData
+                data: this.rainData
               }
             ],
           },
@@ -114,7 +92,7 @@ export default {
               yAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Temperature in °C'
+                  labelString: 'Rain in mm'
                 },
                 ticks: {
                   min: this.scaleMin,

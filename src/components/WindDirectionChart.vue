@@ -2,13 +2,15 @@
 import {Radar} from "vue-chartjs";
 import axios from "axios";
 import dateParser from "@/mixins/DateParser";
+import scaling from "@/mixins/Scaling"
 
 export default {
   extends: Radar,
-  mixins: [dateParser],
+  mixins: [dateParser, scaling],
 
   data() {
     return {
+      scaleMax: 100,
       windDirectionData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       windDirectionLabels: ['N', 'NNE', 'NE', 'NEE', 'E', 'SEE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'SWW', 'W', 'NWW', 'NW', 'NNW']
     }
@@ -42,9 +44,15 @@ export default {
               let direction = entry.windDirection / 22.5
               windDirections[direction]++
             })
+
+            let max = 0
             windDirections.forEach((entry, i) => {
               windDirections[i] = (entry / response.data.length) * 100
+              if (windDirections[i] > max) {
+                max = windDirections[i]
+              }
             })
+            this.scaleMax = this.scaleUp(max, 10, 100)
             this.windDirectionData = windDirections
             this.updateChart()
           })
@@ -56,7 +64,7 @@ export default {
             labels: this.windDirectionLabels,
             datasets: [
               {
-                label: "Wind Direction",
+                label: "Wind Direction in %",
                 backgroundColor: "rgba(179,181,198,0.2)",
                 borderColor: "rgba(179,181,198,1)",
                 pointBackgroundColor: "rgba(179,181,198,1)",
@@ -73,7 +81,7 @@ export default {
             scale: {
               ticks: {
                 min: 0,
-                max: 100
+                max: this.scaleMax
               }
             }
           }

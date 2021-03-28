@@ -15,12 +15,12 @@
           <td>{{ windSpeed }}m/s</td>
         </tr>
         <tr>
-          <td>Wind Direction:</td>
-          <td>{{ windDirection }}</td>
-        </tr>
-        <tr>
           <td>Gust Speed:</td>
           <td>{{ gustSpeed }}m/s</td>
+        </tr>
+        <tr>
+          <td>Wind Direction:</td>
+          <td>{{ windDirection }}</td>
         </tr>
         <tr>
           <td>Rain:</td>
