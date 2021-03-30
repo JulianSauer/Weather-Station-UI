@@ -8,6 +8,23 @@
   </div>
 </template>
 
+<script>
+import dateParser from "@/mixins/DateParser"
+import weatherStationClient from "@/mixins/WeatherStationClient"
+import store from '@/store/index'
+
+export default {
+  mixins: [dateParser, weatherStationClient],
+  created() {
+    let now = new Date()
+    let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
+    now.setHours(now.getHours() - 10)
+    let end = this.formatDate(now, "YYYYMMDD-hhmmss")
+    this.updateStore(store, begin, end)
+  }
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

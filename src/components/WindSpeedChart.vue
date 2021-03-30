@@ -1,6 +1,5 @@
 <script>
 import {Line} from "vue-chartjs";
-import axios from "axios";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling";
 
@@ -21,11 +20,28 @@ export default {
   },
 
   created() {
-    let now = new Date()
-    let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
-    now.setHours(now.getHours() - 10)
-    let end = this.formatDate(now, "YYYYMMDD-hhmmss")
-    this.loadWindSpeedData(begin, end)
+    this.$store.subscribe((mutation, state) => {
+      this.windSpeedData = []
+      this.timeLabels = []
+      let min = state.sortedSensorData[0].sensorData.windSpeed
+      let max = state.sortedSensorData[0].sensorData.windSpeed
+      state.sortedSensorData.forEach(entry => {
+        this.timeLabels.unshift(entry.timeLabel)
+        this.windSpeedData.unshift(entry.sensorData.windSpeed)
+        this.gustSpeedData.unshift(entry.sensorData.gustSpeed)
+
+        if (entry.windSpeed < min) {
+          min = entry.windSpeed
+        }
+        if (entry.windSpeed > max) {
+          max = entry.windSpeed
+        }
+      })
+
+      this.scaleMin = this.scaleDown(min, 5)
+      this.scaleMax = this.scaleUp(max, 5)
+      this.updateChart()
+    });
   },
 
   mounted() {
@@ -43,42 +59,6 @@ export default {
   },
 
   methods: {
-
-    loadWindSpeedData(begin, end) {
-      axios
-          .get('https://8tx41fy5r8.execute-api.eu-central-1.amazonaws.com/api/weather', {
-            params: {
-              begin: begin,
-              end: end
-            }
-          })
-          .then(response => {
-            let min = response.data[0].windSpeed
-            let max = response.data[0].windSpeed
-            response.data.forEach((entry, i) => {
-              let date = this.convertStringToDate(entry.timestamp)
-              this.timeLabels[i] = this.formatDate(date, "hh:mm")
-              this.windSpeedData[i] = entry.windSpeed
-              this.gustSpeedData[i] = entry.gustSpeed
-
-              if (entry.windSpeed < min) {
-                min = entry.windSpeed
-              }
-              if (entry.gustSpeed < min) {
-                min = entry.gustSpeed
-              }
-              if (entry.gustSpeed > max) {
-                max = entry.gustSpeed
-              }
-              if (entry.windSpeed > max) {
-                max = entry.windSpeed
-              }
-            })
-            this.scaleMin = this.scaleDown(min, 5, 0)
-            this.scaleMax = this.scaleUp(max, 5)
-            this.updateChart()
-          })
-    },
 
     updateChart() {
       this.renderChart(

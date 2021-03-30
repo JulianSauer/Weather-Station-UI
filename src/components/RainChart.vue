@@ -19,11 +19,27 @@ export default {
   },
 
   created() {
-    let now = new Date()
-    let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
-    now.setHours(now.getHours() - 10)
-    let end = this.formatDate(now, "YYYYMMDD-hhmmss")
-    this.loadRainData(begin, end)
+    this.$store.subscribe((mutation, state) => {
+      this.rainData = []
+      this.timeLabels = []
+      let min = state.sortedSensorData[0].sensorData.rain
+      let max = state.sortedSensorData[0].sensorData.rain
+      state.sortedSensorData.forEach(entry => {
+        this.timeLabels.unshift(entry.timeLabel)
+        this.rainData.unshift(entry.sensorData.rain)
+
+        if (entry.rain < min) {
+          min = entry.rain
+        }
+        if (entry.rain > max) {
+          max = entry.rain
+        }
+      })
+
+      this.scaleMin = this.scaleDown(min, 10, 0)
+      this.scaleMax = this.scaleUp(max, 10)
+      this.updateChart()
+    });
   },
 
   mounted() {
@@ -39,35 +55,6 @@ export default {
   },
 
   methods: {
-
-    loadRainData(begin, end) {
-      axios
-          .get('https://8tx41fy5r8.execute-api.eu-central-1.amazonaws.com/api/weather', {
-            params: {
-              begin: begin,
-              end: end
-            }
-          })
-          .then(response => {
-            let max = 0
-            let min = response.data[0].rain
-            response.data.forEach((entry, i) => {
-              let date = this.convertStringToDate(entry.timestamp)
-              this.timeLabels[i] = this.formatDate(date, "hh:mm")
-              this.rainData[i] = entry.rain
-
-              if (entry.rain < min) {
-                min = entry.rain
-              }
-              if (entry.rain > max) {
-                max = entry.rain
-              }
-              this.scaleMin = this.scaleDown(min, 10, 0)
-              this.scaleMax = this.scaleUp(max, 10)
-            })
-            this.updateChart()
-          })
-    },
 
     updateChart() {
       this.renderChart(

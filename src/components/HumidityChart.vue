@@ -1,6 +1,5 @@
 <script>
 import {Line} from "vue-chartjs";
-import axios from "axios";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling";
 
@@ -19,11 +18,27 @@ export default {
   },
 
   created() {
-    let now = new Date()
-    let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
-    now.setHours(now.getHours() - 10)
-    let end = this.formatDate(now, "YYYYMMDD-hhmmss")
-    this.loadHumidityData(begin, end)
+    this.$store.subscribe((mutation, state) => {
+      this.humidityData = []
+      this.timeLabels = []
+      let min = state.sortedSensorData[0].sensorData.humidity
+      let max = state.sortedSensorData[0].sensorData.humidity
+      state.sortedSensorData.forEach(entry => {
+        this.timeLabels.unshift(entry.timeLabel)
+        this.humidityData.unshift(entry.sensorData.humidity)
+
+        if (entry.humidityData < min) {
+          min = entry.humidity
+        }
+        if (entry.humidity > max) {
+          max = entry.humidity
+        }
+      })
+
+      this.scaleMin = this.scaleDown(min, 10, 0)
+      this.scaleMax = this.scaleUp(max, 10, 100)
+      this.updateChart()
+    });
   },
 
   mounted() {
@@ -37,28 +52,6 @@ export default {
   },
 
   methods: {
-
-    loadHumidityData(begin, end) {
-      axios
-          .get('https://8tx41fy5r8.execute-api.eu-central-1.amazonaws.com/api/weather', {
-            params: {
-              begin: begin,
-              end: end
-            }
-          })
-          .then(response => {
-            let min = response.data[0].humidity
-            let max = response.data[0].humidity
-            response.data.forEach((entry, i) => {
-              let date = this.convertStringToDate(entry.timestamp)
-              this.timeLabels[i] = this.formatDate(date, "hh:mm")
-              this.humidityData[i] = entry.humidity
-            })
-            this.scaleMin = this.scaleDown(min, 10, 0)
-            this.scaleMax = this.scaleUp(max, 10, 100)
-            this.updateChart()
-          })
-    },
 
     updateChart() {
       this.renderChart(

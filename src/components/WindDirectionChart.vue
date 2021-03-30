@@ -1,6 +1,5 @@
 <script>
 import {Radar} from "vue-chartjs";
-import axios from "axios";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling"
 
@@ -17,11 +16,24 @@ export default {
   },
 
   created() {
-    let now = new Date()
-    let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
-    now.setHours(now.getHours() - 10)
-    let end = this.formatDate(now, "YYYYMMDD-hhmmss")
-    this.loadWindDirectionData(begin, end)
+    this.$store.subscribe((mutation, state) => {
+      let windDirections = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      state.sortedSensorData.forEach(entry => {
+        let direction = entry.sensorData.windDirection / 22.5
+        windDirections[direction]++
+      })
+
+      let max = 0
+      windDirections.forEach((entry, i) => {
+        windDirections[i] = (entry / state.sortedSensorData.length) * 100
+        if (windDirections[i] > max) {
+          max = windDirections[i]
+        }
+      })
+      this.scaleMax = this.scaleUp(max, 10, 100)
+      this.windDirectionData = windDirections
+      this.updateChart()
+    });
   },
 
   mounted() {
@@ -29,34 +41,6 @@ export default {
   },
 
   methods: {
-
-    loadWindDirectionData(begin, end) {
-      axios
-          .get('https://8tx41fy5r8.execute-api.eu-central-1.amazonaws.com/api/weather', {
-            params: {
-              begin: begin,
-              end: end
-            }
-          })
-          .then(response => {
-            let windDirections = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            response.data.forEach(entry => {
-              let direction = entry.windDirection / 22.5
-              windDirections[direction]++
-            })
-
-            let max = 0
-            windDirections.forEach((entry, i) => {
-              windDirections[i] = (entry / response.data.length) * 100
-              if (windDirections[i] > max) {
-                max = windDirections[i]
-              }
-            })
-            this.scaleMax = this.scaleUp(max, 10, 100)
-            this.windDirectionData = windDirections
-            this.updateChart()
-          })
-    },
 
     updateChart() {
       this.renderChart(

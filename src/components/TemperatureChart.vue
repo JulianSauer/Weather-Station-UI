@@ -1,6 +1,5 @@
 <script>
 import {Line} from "vue-chartjs";
-import axios from "axios";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling"
 
@@ -25,16 +24,32 @@ export default {
         "20": "rgb(255,200,0)",
         "25": "rgb(255,119,0)",
         "30": "rgb(255,0,0)"
-      },
+      }
     }
   },
 
   created() {
-    let now = new Date()
-    let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
-    now.setHours(now.getHours() - 10)
-    let end = this.formatDate(now, "YYYYMMDD-hhmmss")
-    this.loadTemperatureData(begin, end)
+    this.$store.subscribe((mutation, state) => {
+      this.temperatureData = []
+      this.timeLabels = []
+      let min = state.sortedSensorData[0].sensorData.temperature
+      let max = state.sortedSensorData[0].sensorData.temperature
+      state.sortedSensorData.forEach(entry => {
+        this.timeLabels.unshift(entry.timeLabel)
+        this.temperatureData.unshift(entry.sensorData.temperature)
+
+        if (entry.temperature < min) {
+          min = entry.temperature
+        }
+        if (entry.temperature > max) {
+          max = entry.temperature
+        }
+      })
+
+      this.scaleMin = this.scaleDown(min, 5)
+      this.scaleMax = this.scaleUp(max, 5)
+      this.updateChart()
+    });
   },
 
   mounted() {
@@ -42,36 +57,6 @@ export default {
   },
 
   methods: {
-
-    loadTemperatureData(begin, end) {
-      axios
-          .get('https://8tx41fy5r8.execute-api.eu-central-1.amazonaws.com/api/weather', {
-            params: {
-              begin: begin,
-              end: end
-            }
-          })
-          .then(response => {
-            let min = response.data[0].temperature
-            let max = response.data[0].temperature
-            response.data.forEach((entry, i) => {
-              let date = this.convertStringToDate(entry.timestamp)
-              this.timeLabels[i] = this.formatDate(date, "hh:mm")
-              this.temperatureData[i] = entry.temperature
-
-              if (entry.temperature < min) {
-                min = entry.temperature
-              }
-              if (entry.temperature > max) {
-                max = entry.temperature
-              }
-            })
-
-            this.scaleMin = this.scaleDown(min, 5)
-            this.scaleMax = this.scaleUp(max, 5)
-            this.updateChart()
-          })
-    },
 
     updateGradient() {
       this.gradient = this.$refs.canvas

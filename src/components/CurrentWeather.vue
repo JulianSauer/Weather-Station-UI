@@ -53,27 +53,19 @@ export default {
   },
 
   created() {
-    this.updateData()
+    this.$store.subscribe((mutation, state) => {
+      let dateAndTime = this.convertStringToDate(state.sortedSensorData[0].sensorData.timestamp)
+      this.timestamp = dateAndTime.toLocaleTimeString() + ' (' + dateAndTime.toLocaleDateString() + ')'
+      this.temperature = state.sortedSensorData[0].sensorData.temperature
+      this.gustSpeed = state.sortedSensorData[0].sensorData.gustSpeed
+      this.humidity = state.sortedSensorData[0].sensorData.humidity
+      this.rain = state.sortedSensorData[0].sensorData.rain
+      this.windDirection = state.sortedSensorData[0].sensorData.windDirection
+      this.windSpeed = state.sortedSensorData[0].sensorData.windSpeed
+    });
   },
 
   methods: {
-    updateData() {
-      axios
-          .get('https://8tx41fy5r8.execute-api.eu-central-1.amazonaws.com/api/weather')
-          .then(response => {
-            let dateAndTime = this.convertStringToDate(response.data.timestamp)
-            this.timestamp = dateAndTime.toLocaleTimeString() + ' (' + dateAndTime.toLocaleDateString() + ')'
-            this.temperature = response.data.temperature
-            this.gustSpeed = response.data.gustSpeed
-            this.humidity = response.data.humidity
-            this.rain = response.data.rain
-            this.windDirection = this.convertDirection(response.data.windDirection)
-            this.windSpeed = response.data.windSpeed
-          })
-          .catch(error => {
-            console.log(error)
-          })
-    },
 
     convertDirection(degrees) {
       let direction = degrees / 22.5
