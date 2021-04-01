@@ -28,13 +28,11 @@
         </tr>
       </table>
     </div>
-    <p id="lastUpdate">Sensor data from: {{ timestamp }}</p>
   </div>
 </template>
 
 <script>
-import {Component, Vue} from 'vue-property-decorator';
-import axios from "axios";
+import {Vue} from 'vue-property-decorator';
 import dateParser from "../mixins/DateParser";
 
 export default {
@@ -42,20 +40,17 @@ export default {
   mixins: [dateParser],
   data() {
     return {
-    timestamp: '',
-    temperature: '',
-    gustSpeed: '',
-    humidity: '',
-    rain: '',
-    windDirection: '',
-    windSpeed: ''
+      temperature: '',
+      gustSpeed: '',
+      humidity: '',
+      rain: '',
+      windDirection: '',
+      windSpeed: ''
     }
   },
 
   created() {
     this.$store.subscribe((mutation, state) => {
-      let dateAndTime = this.convertStringToDate(state.sortedSensorData[0].sensorData.timestamp)
-      this.timestamp = dateAndTime.toLocaleTimeString() + ' (' + dateAndTime.toLocaleDateString() + ')'
       this.temperature = state.sortedSensorData[0].sensorData.temperature
       this.gustSpeed = state.sortedSensorData[0].sensorData.gustSpeed
       this.humidity = state.sortedSensorData[0].sensorData.humidity
