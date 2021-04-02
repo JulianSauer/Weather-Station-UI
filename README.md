@@ -1,19 +1,11 @@
-# weather-station-ui
+# Weather Station UI
 
-## Project setup
+To run the project use:
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+vue-cli-service serve
 ```
 
-### Compiles and minifies for production
+For a local server mocking sensor data from the weather station api use:
 ```
-npm run build
+python3 src/mock/WeatherStationApi
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

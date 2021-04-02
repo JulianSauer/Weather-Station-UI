@@ -15,7 +15,7 @@ export default {
             end = this.formatDate(now, "YYYYMMDD-hhmmss")
 
             axios
-                .get('https://8tx41fy5r8.execute-api.eu-central-1.amazonaws.com/api/weather', {
+                .get(process.env.VUE_APP_WEATHER_STATION_API, {
                     params: {
                         begin: begin,
                         end: end
