@@ -56,6 +56,10 @@ export default {
     });
   },
 
+  mounted() {
+    this.loadDataFromStore()
+  },
+
   beforeDestroy() {
     this.unsubscribe()
   },
