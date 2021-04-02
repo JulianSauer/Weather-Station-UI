@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Current from '../views/Current.vue'
+import Current from '@/views/Current.vue'
 
 Vue.use(VueRouter)
 
@@ -13,10 +13,32 @@ const routes: Array<RouteConfig> = [
   {
     path: '/forecast',
     name: 'Forecast',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Forecast.vue')
+    component: () => import('@/views/Forecast.vue')
+  },
+  {
+    path: '/temperature',
+    name: 'Temperature',
+    component: () => import('@/views/Temperature.vue')
+  },
+  {
+    path: '/humidity',
+    name: 'Humidity',
+    component: () => import('@/views/Humidity.vue')
+  },
+  {
+    path: '/rain',
+    name: 'Rain',
+    component: () => import('@/views/Rain.vue')
+  },
+  {
+    path: '/wind-direction',
+    name: 'Wind-Direction',
+    component: () => import('@/views/WindDirection.vue')
+  },
+  {
+    path: '/wind-speed',
+    name: 'Wind-Speed',
+    component: () => import('@/views/WindSpeed.vue')
   }
 ]
 

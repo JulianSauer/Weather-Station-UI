@@ -2,19 +2,67 @@
   <div id="app">
     <v-app>
       <v-app-bar app color="teal" dark>
-        <span class="mr-2">Weather Station</span>
-
+        <v-app-bar-nav-icon @click.stop="navigationDrawer = !navigationDrawer"></v-app-bar-nav-icon>
+        <span v-if="!isSmallDevice()" class="mr-2">Weather Station</span>
         <v-spacer></v-spacer>
 
-        <span>{{ timestamp }}</span>
+        <span class="mr-1">{{ timestamp }}</span>
         <v-btn v-on:click="updateSensorData24" icon>
-          <v-icon>mdi-cached</v-icon>
+          <v-icon>mdi-refresh</v-icon>
         </v-btn>
       </v-app-bar>
 
+      <v-navigation-drawer v-model="navigationDrawer" absolute temporary dark color="teal darken-3">
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="title"> Weather Station</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list nav>
+          <v-list-item-group>
+            <v-list-item to="/">
+              <v-list-item-title>Current Weather</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item to="/forecast">
+              <v-list-item-title>Forecast</v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+
+        <v-divider></v-divider>
+
+        <v-list nav dense>
+          <v-list-item-group>
+            <v-list-item to="/temperature">
+              <v-list-item-title>Temperature</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item to="/humidity">
+              <v-list-item-title>Humidity</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item to="/rain">
+              <v-list-item-title>Rain</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item to="/wind-direction">
+              <v-list-item-title>Wind Direction</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item to="/wind-speed">
+              <v-list-item-title>Wind Speed</v-list-item-title>
+            </v-list-item>
+
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+
       <v-main>
-        <CurrentWeather/>
-        <TemperatureChart/>
+        <router-view/>
       </v-main>
     </v-app>
   </div>
@@ -38,8 +86,15 @@ export default Vue.extend({
 
   data() {
     return {
+      navigationDrawer: false,
       timestamp: ''
     }
+  },
+
+  watch: {
+    group() {
+      this.navigationDrawer = false
+    },
   },
 
   mixins: [dateParser, weatherStationClient],
@@ -63,7 +118,11 @@ export default Vue.extend({
       now.setHours(now.getHours() - 24)
       let end = this.formatDate(now, "YYYYMMDD-hhmmss")
       this.updateStore(store, begin, end)
-    }
+    },
+
+    isSmallDevice() {
+      return this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm'
+    },
   }
 });
 </script>
