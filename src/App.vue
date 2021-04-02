@@ -121,7 +121,7 @@ export default Vue.extend({
       let now = new Date()
       if (store.state.sortedSensorData[0].sensorData.windSpeed > 10) {
         iconName = '/favicon_wind.png'
-      } else if (now.getHours() < 8 || now.getHours() > 8) {
+      } else if (now.getHours() < 8 || now.getHours() > 20) {
         iconName = '/favicon_moon.png'
       } else if (store.state.sortedSensorData[0].sensorData.temperature < 5) {
         iconName = '/favicon_cold.png'
