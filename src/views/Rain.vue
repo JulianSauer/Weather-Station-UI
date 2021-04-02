@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <RainChart/>
+  <div style="height: 100%; padding: 10px;">
+    <RainChart style="height: 100%;"/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import RainChart from '@/components/RainChart.vue';
 
 @Component({
@@ -13,5 +13,6 @@ import RainChart from '@/components/RainChart.vue';
     RainChart: RainChart,
   },
 })
-export default class Rain extends Vue {}
+export default class Rain extends Vue {
+}
 </script>

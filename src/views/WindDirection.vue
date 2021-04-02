@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <WindDirectionChart/>
+  <div style="height: 100%; padding: 10px;">
+  <WindDirectionChart style="height: 100%"/>
   </div>
 </template>
 

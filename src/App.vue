@@ -70,8 +70,6 @@
 
 <script>
 import Vue from 'vue';
-import CurrentWeather from './components/CurrentWeather.vue';
-import TemperatureChart from './components/TemperatureChart.vue';
 import dateParser from "@/mixins/DateParser"
 import weatherStationClient from "@/mixins/WeatherStationClient"
 import store from '@/store/index'
@@ -80,8 +78,6 @@ export default Vue.extend({
   name: 'App',
 
   components: {
-    CurrentWeather,
-    TemperatureChart,
   },
 
   data() {

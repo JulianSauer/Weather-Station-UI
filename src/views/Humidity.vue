@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <HumidityChart/>
+    <div style="height: 100%; padding: 10px;">
+    <HumidityChart style="height: 100%"/>
   </div>
 </template>
 
