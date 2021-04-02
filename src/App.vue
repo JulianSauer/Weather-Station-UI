@@ -111,7 +111,26 @@ export default Vue.extend({
     });
   },
 
+  mounted() {
+    this.updateFavicon()
+  },
+
   methods: {
+    updateFavicon() {
+      let iconName = '/sunny.png'
+      let now = new Date()
+      if (store.state.sortedSensorData[0].sensorData.windSpeed > 10) {
+        iconName = '/favicon_wind.png'
+      } else if (now.getHours() < 8 || now.getHours() > 8) {
+        iconName = '/favicon_moon.png'
+      } else if (store.state.sortedSensorData[0].sensorData.temperature < 5) {
+        iconName = '/favicon_cold.png'
+      }
+
+      const favicon = document.getElementById("favicon")
+      favicon.href = iconName;
+    },
+
     updateSensorData24() {
       let now = new Date()
       let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
