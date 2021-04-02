@@ -59,12 +59,10 @@ export default {
             datasets: [
               {
                 label: "Wind Direction in %",
-                backgroundColor: "rgba(179,181,198,0.2)",
-                borderColor: "rgba(179,181,198,1)",
-                pointBackgroundColor: "rgba(179,181,198,1)",
-                pointBorderColor: "#fff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "rgba(179,181,198,1)",
+                backgroundColor: "rgb(38,166,154, 0.4)",
+                borderColor: "#009688",
+                pointBackgroundColor: "#009688",
+                pointBorderColor: "#009688",
                 data: this.windDirectionData
               }
             ]

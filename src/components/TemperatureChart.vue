@@ -16,15 +16,15 @@ export default {
       temperatureData: [],
       timeLabels: [],
       temperatureColors: {
-        "-10": "rgb(0,94,255)",
-        "-5": "rgb(0,115,255)",
-        "0": "rgb(0,149,255)",
-        "5": "rgb(0,234,255)",
-        "10": "rgb(0,234,255)",
-        "15": "rgb(255,221,0)",
-        "20": "rgb(255,200,0)",
-        "25": "rgb(255,119,0)",
-        "30": "rgb(255,0,0)"
+        "-10": "rgb(38,166,154)",
+        "-5": "rgb(77,182,172)",
+        "0": "rgb(128,203,196)",
+        "5": "rgb(178,223,219)",
+        "10": "rgb(224,242,241)",
+        "15": "rgb(255,204,128)",
+        "20": "rgb(255,167,38)",
+        "25": "rgb(251,140,0)",
+        "30": "rgb(230,81,0)",
       }
     }
   },
@@ -56,11 +56,11 @@ export default {
         this.timeLabels.unshift(entry.timeLabel)
         this.temperatureData.unshift(entry.sensorData.temperature)
 
-        if (entry.temperature < min) {
-          min = entry.temperature
+        if (entry.sensorData.temperature < min) {
+          min = entry.sensorData.temperature
         }
-        if (entry.temperature > max) {
-          max = entry.temperature
+        if (entry.sensorData.temperature > max) {
+          max = entry.sensorData.temperature
         }
       })
 
@@ -93,9 +93,9 @@ export default {
             datasets: [
               {
                 label: "Temperature",
-                borderColor: "#000000",
+                borderColor: "white",
                 pointBackgroundColor: "white",
-                borderWidth: 1,
+                borderWidth: 3,
                 pointBorderColor: "white",
                 backgroundColor: this.gradient,
                 data: this.temperatureData

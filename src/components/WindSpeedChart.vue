@@ -31,12 +31,12 @@ export default {
     this.windSpeedGradient = this.$refs.canvas
         .getContext("2d")
         .createLinearGradient(0, 0, 0, 450);
-    this.windSpeedGradient.addColorStop(0, "rgb(166,209,255)");
+    this.windSpeedGradient.addColorStop(0, "rgb(38,166,154)");
 
     this.gustSpeedGradient = this.$refs.canvas
         .getContext("2d")
         .createLinearGradient(0, 0, 0, 450);
-    this.gustSpeedGradient.addColorStop(0, "rgb(0,102,255)");
+    this.gustSpeedGradient.addColorStop(0, "rgb(38,198,218)");
 
     this.loadDataFromStore()
     this.updateChart()
@@ -58,16 +58,22 @@ export default {
         this.windSpeedData.unshift(entry.sensorData.windSpeed)
         this.gustSpeedData.unshift(entry.sensorData.gustSpeed)
 
-        if (entry.windSpeed < min) {
-          min = entry.windSpeed
+        if (entry.sensorData.windSpeed < min) {
+          min = entry.sensorData.windSpeed
         }
-        if (entry.windSpeed > max) {
-          max = entry.windSpeed
+        if (entry.sensorData.windSpeed > max) {
+          max = entry.sensorData.windSpeed
+        }
+        if (entry.sensorData.gustSpeed < min) {
+          min = entry.sensorData.gustSpeed
+        }
+        if (entry.sensorData.gustSpeed > max) {
+          max = entry.sensorData.gustSpeed
         }
       })
 
-      this.scaleMin = this.scaleDown(min, 5)
-      this.scaleMax = this.scaleUp(max, 5)
+      this.scaleMin = this.scaleDown(min, 3)
+      this.scaleMax = this.scaleUp(max, 3)
     },
 
     updateChart() {
@@ -77,19 +83,19 @@ export default {
             datasets: [
               {
                 label: "Wind Speed",
-                borderColor: "#0066ff",
-                pointBackgroundColor: "white",
-                borderWidth: 1,
-                pointBorderColor: "white",
+                borderColor: "#009688",
+                pointBackgroundColor: "#009688",
+                borderWidth: 3,
+                pointBorderColor: "#009688",
                 backgroundColor: this.windSpeedGradient,
                 data: this.windSpeedData
               },
               {
                 label: "Gust Speed",
-                borderColor: "#0066ff",
-                pointBackgroundColor: "white",
-                borderWidth: 1,
-                pointBorderColor: "white",
+                borderColor: "#00BCD4",
+                pointBackgroundColor: "#00BCD4",
+                borderWidth: 3,
+                pointBorderColor: "#00BCD4",
                 backgroundColor: this.gustSpeedGradient,
                 data: this.gustSpeedData
               }

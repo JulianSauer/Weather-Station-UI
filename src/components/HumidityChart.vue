@@ -30,7 +30,7 @@ export default {
         .getContext("2d")
         .createLinearGradient(0, 0, 0, 450);
 
-    this.gradient.addColorStop(0, "rgb(110,186,255)");
+    this.gradient.addColorStop(0, "rgb(38,166,154)");
 
     this.loadDataFromStore()
     this.updateChart()
@@ -51,11 +51,11 @@ export default {
         this.timeLabels.unshift(entry.timeLabel)
         this.humidityData.unshift(entry.sensorData.humidity)
 
-        if (entry.humidityData < min) {
-          min = entry.humidity
+        if (entry.sensorData.humidityData < min) {
+          min = entry.sensorData.humidity
         }
-        if (entry.humidity > max) {
-          max = entry.humidity
+        if (entry.sensorData.humidity > max) {
+          max = entry.sensorData.humidity
         }
       })
 
@@ -70,10 +70,10 @@ export default {
             datasets: [
               {
                 label: "Humidity",
-                borderColor: "#027ff1",
-                pointBackgroundColor: "white",
-                borderWidth: 1,
-                pointBorderColor: "white",
+                borderColor: "#009688",
+                pointBackgroundColor: "#009688",
+                borderWidth: 3,
+                pointBorderColor: "#009688",
                 backgroundColor: this.gradient,
                 data: this.humidityData
               }
