@@ -1,8 +1,8 @@
 <script>
 import {Line} from "vue-chartjs";
-import axios from "axios";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling";
+import store from "@/store/index"
 
 export default {
   extends: Line,
@@ -19,25 +19,8 @@ export default {
   },
 
   created() {
-    this.$store.subscribe((mutation, state) => {
-      this.rainData = []
-      this.timeLabels = []
-      let min = state.sortedSensorData[0].sensorData.rain
-      let max = state.sortedSensorData[0].sensorData.rain
-      state.sortedSensorData.forEach(entry => {
-        this.timeLabels.unshift(entry.timeLabel)
-        this.rainData.unshift(entry.sensorData.rain)
-
-        if (entry.rain < min) {
-          min = entry.rain
-        }
-        if (entry.rain > max) {
-          max = entry.rain
-        }
-      })
-
-      this.scaleMin = this.scaleDown(min, 10, 0)
-      this.scaleMax = this.scaleUp(max, 10)
+    this.unsubscribe = this.$store.subscribe(() => {
+      this.loadDataFromStore()
       this.updateChart()
     });
   },
@@ -51,10 +34,36 @@ export default {
     this.gradient.addColorStop(0.5, "rgb(2,127,241)");
     this.gradient.addColorStop(1, "rgb(224,239,255)");
 
+    this.loadDataFromStore()
     this.updateChart()
   },
 
+  beforeDestroy() {
+    this.unsubscribe()
+  },
+
   methods: {
+
+    loadDataFromStore() {
+      this.rainData = []
+      this.timeLabels = []
+      let min = store.state.sortedSensorData[0].sensorData.rain
+      let max = store.state.sortedSensorData[0].sensorData.rain
+      store.state.sortedSensorData.forEach(entry => {
+        this.timeLabels.unshift(entry.timeLabel)
+        this.rainData.unshift(entry.sensorData.rain)
+
+        if (entry.rain < min) {
+          min = entry.rain
+        }
+        if (entry.rain > max) {
+          max = entry.rain
+        }
+      })
+
+      this.scaleMin = this.scaleDown(min, 10, 0)
+      this.scaleMax = this.scaleUp(max, 10)
+    },
 
     updateChart() {
       this.renderChart(

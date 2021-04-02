@@ -2,6 +2,7 @@
 import {Radar} from "vue-chartjs";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling"
+import store from "@/store/index"
 
 export default {
   extends: Radar,
@@ -16,31 +17,40 @@ export default {
   },
 
   created() {
-    this.$store.subscribe((mutation, state) => {
+    this.unsubscribe = this.$store.subscribe(() => {
+      this.loadDataFromStore()
+      this.updateChart()
+    });
+  },
+
+  mounted() {
+    this.loadDataFromStore()
+    this.updateChart()
+  },
+
+  beforeDestroy() {
+    this.unsubscribe()
+  },
+
+  methods: {
+
+    loadDataFromStore() {
       let windDirections = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-      state.sortedSensorData.forEach(entry => {
+      store.state.sortedSensorData.forEach(entry => {
         let direction = entry.sensorData.windDirection / 22.5
         windDirections[direction]++
       })
 
       let max = 0
       windDirections.forEach((entry, i) => {
-        windDirections[i] = (entry / state.sortedSensorData.length) * 100
+        windDirections[i] = (entry / store.state.sortedSensorData.length) * 100
         if (windDirections[i] > max) {
           max = windDirections[i]
         }
       })
       this.scaleMax = this.scaleUp(max, 10, 100)
       this.windDirectionData = windDirections
-      this.updateChart()
-    });
-  },
-
-  mounted() {
-    this.updateChart()
-  },
-
-  methods: {
+    },
 
     updateChart() {
       this.renderChart(

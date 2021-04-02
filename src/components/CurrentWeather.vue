@@ -34,6 +34,7 @@
 <script>
 import {Vue} from 'vue-property-decorator';
 import dateParser from "../mixins/DateParser";
+import store from "@/store/index"
 
 export default {
   extends: Vue,
@@ -50,17 +51,25 @@ export default {
   },
 
   created() {
-    this.$store.subscribe((mutation, state) => {
-      this.temperature = state.sortedSensorData[0].sensorData.temperature
-      this.gustSpeed = state.sortedSensorData[0].sensorData.gustSpeed
-      this.humidity = state.sortedSensorData[0].sensorData.humidity
-      this.rain = state.sortedSensorData[0].sensorData.rain
-      this.windDirection = state.sortedSensorData[0].sensorData.windDirection
-      this.windSpeed = state.sortedSensorData[0].sensorData.windSpeed
+    this.unsubscribe = this.$store.subscribe(() => {
+      this.loadDataFromStore()
     });
   },
 
+  beforeDestroy() {
+    this.unsubscribe()
+  },
+
   methods: {
+
+    loadDataFromStore() {
+      this.temperature = store.state.sortedSensorData[0].sensorData.temperature
+      this.gustSpeed = store.state.sortedSensorData[0].sensorData.gustSpeed
+      this.humidity = store.state.sortedSensorData[0].sensorData.humidity
+      this.rain = store.state.sortedSensorData[0].sensorData.rain
+      this.windDirection = store.state.sortedSensorData[0].sensorData.windDirection
+      this.windSpeed = store.state.sortedSensorData[0].sensorData.windSpeed
+    },
 
     convertDirection(degrees) {
       let direction = degrees / 22.5

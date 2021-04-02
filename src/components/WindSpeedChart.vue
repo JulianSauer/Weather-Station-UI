@@ -2,6 +2,7 @@
 import {Line} from "vue-chartjs";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling";
+import store from "@/store/index"
 
 export default {
   extends: Line,
@@ -20,26 +21,8 @@ export default {
   },
 
   created() {
-    this.$store.subscribe((mutation, state) => {
-      this.windSpeedData = []
-      this.timeLabels = []
-      let min = state.sortedSensorData[0].sensorData.windSpeed
-      let max = state.sortedSensorData[0].sensorData.windSpeed
-      state.sortedSensorData.forEach(entry => {
-        this.timeLabels.unshift(entry.timeLabel)
-        this.windSpeedData.unshift(entry.sensorData.windSpeed)
-        this.gustSpeedData.unshift(entry.sensorData.gustSpeed)
-
-        if (entry.windSpeed < min) {
-          min = entry.windSpeed
-        }
-        if (entry.windSpeed > max) {
-          max = entry.windSpeed
-        }
-      })
-
-      this.scaleMin = this.scaleDown(min, 5)
-      this.scaleMax = this.scaleUp(max, 5)
+    this.unsubscribe = this.$store.subscribe(() => {
+      this.loadDataFromStore()
       this.updateChart()
     });
   },
@@ -55,10 +38,37 @@ export default {
         .createLinearGradient(0, 0, 0, 450);
     this.gustSpeedGradient.addColorStop(0, "rgb(0,102,255)");
 
+    this.loadDataFromStore()
     this.updateChart()
   },
 
+  beforeDestroy() {
+    this.unsubscribe()
+  },
+
   methods: {
+
+    loadDataFromStore() {
+      this.windSpeedData = []
+      this.timeLabels = []
+      let min = store.state.sortedSensorData[0].sensorData.windSpeed
+      let max = store.state.sortedSensorData[0].sensorData.windSpeed
+      store.state.sortedSensorData.forEach(entry => {
+        this.timeLabels.unshift(entry.timeLabel)
+        this.windSpeedData.unshift(entry.sensorData.windSpeed)
+        this.gustSpeedData.unshift(entry.sensorData.gustSpeed)
+
+        if (entry.windSpeed < min) {
+          min = entry.windSpeed
+        }
+        if (entry.windSpeed > max) {
+          max = entry.windSpeed
+        }
+      })
+
+      this.scaleMin = this.scaleDown(min, 5)
+      this.scaleMax = this.scaleUp(max, 5)
+    },
 
     updateChart() {
       this.renderChart(

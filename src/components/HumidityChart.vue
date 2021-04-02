@@ -2,6 +2,7 @@
 import {Line} from "vue-chartjs";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling";
+import store from "@/store/index"
 
 export default {
   extends: Line,
@@ -18,12 +19,35 @@ export default {
   },
 
   created() {
-    this.$store.subscribe((mutation, state) => {
+    this.unsubscribe = this.$store.subscribe(() => {
+      this.loadDataFromStore()
+      this.updateChart()
+    });
+  },
+
+  mounted() {
+    this.gradient = this.$refs.canvas
+        .getContext("2d")
+        .createLinearGradient(0, 0, 0, 450);
+
+    this.gradient.addColorStop(0, "rgb(110,186,255)");
+
+    this.loadDataFromStore()
+    this.updateChart()
+  },
+
+  beforeDestroy() {
+    this.unsubscribe()
+  },
+
+  methods: {
+
+    loadDataFromStore() {
       this.humidityData = []
       this.timeLabels = []
-      let min = state.sortedSensorData[0].sensorData.humidity
-      let max = state.sortedSensorData[0].sensorData.humidity
-      state.sortedSensorData.forEach(entry => {
+      let min = store.state.sortedSensorData[0].sensorData.humidity
+      let max = store.state.sortedSensorData[0].sensorData.humidity
+      store.state.sortedSensorData.forEach(entry => {
         this.timeLabels.unshift(entry.timeLabel)
         this.humidityData.unshift(entry.sensorData.humidity)
 
@@ -37,21 +61,7 @@ export default {
 
       this.scaleMin = this.scaleDown(min, 10, 0)
       this.scaleMax = this.scaleUp(max, 10, 100)
-      this.updateChart()
-    });
-  },
-
-  mounted() {
-    this.gradient = this.$refs.canvas
-        .getContext("2d")
-        .createLinearGradient(0, 0, 0, 450);
-
-    this.gradient.addColorStop(0, "rgb(110,186,255)");
-
-    this.updateChart()
-  },
-
-  methods: {
+    },
 
     updateChart() {
       this.renderChart(

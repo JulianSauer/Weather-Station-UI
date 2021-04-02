@@ -2,6 +2,7 @@
 import {Line} from "vue-chartjs";
 import dateParser from "@/mixins/DateParser";
 import scaling from "@/mixins/Scaling"
+import store from "@/store/index"
 
 export default {
   extends: Line,
@@ -29,12 +30,29 @@ export default {
   },
 
   created() {
-    this.$store.subscribe((mutation, state) => {
+    this.unsubscribe = this.$store.subscribe(() => {
+      this.loadDataFromStore()
+      this.updateChart()
+    });
+  },
+
+  mounted() {
+    this.loadDataFromStore()
+    this.updateChart()
+  },
+
+  beforeDestroy() {
+    this.unsubscribe()
+  },
+
+  methods: {
+
+    loadDataFromStore() {
       this.temperatureData = []
       this.timeLabels = []
-      let min = state.sortedSensorData[0].sensorData.temperature
-      let max = state.sortedSensorData[0].sensorData.temperature
-      state.sortedSensorData.forEach(entry => {
+      let min = store.state.sortedSensorData[0].sensorData.temperature
+      let max = store.state.sortedSensorData[0].sensorData.temperature
+      store.state.sortedSensorData.forEach(entry => {
         this.timeLabels.unshift(entry.timeLabel)
         this.temperatureData.unshift(entry.sensorData.temperature)
 
@@ -48,15 +66,7 @@ export default {
 
       this.scaleMin = this.scaleDown(min, 5)
       this.scaleMax = this.scaleUp(max, 5)
-      this.updateChart()
-    });
-  },
-
-  mounted() {
-    this.updateChart()
-  },
-
-  methods: {
+    },
 
     updateGradient() {
       this.gradient = this.$refs.canvas
