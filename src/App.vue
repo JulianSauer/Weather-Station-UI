@@ -3,7 +3,7 @@
     <v-app>
       <v-app-bar app color="teal" dark>
         <v-app-bar-nav-icon @click.stop="navigationDrawer = !navigationDrawer"></v-app-bar-nav-icon>
-        <span v-if="!isSmallDevice()" class="mr-2">Weather Station</span>
+        <span v-if="!isSmallDevice()" class="mr-2">{{ $t('weatherStation') }}</span>
         <v-spacer></v-spacer>
 
         <span class="mr-1">{{ timestamp }}</span>
@@ -15,7 +15,7 @@
       <v-navigation-drawer v-model="navigationDrawer" absolute temporary dark color="teal darken-3">
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="title"> Weather Station</v-list-item-title>
+            <v-list-item-title class="title">{{ $t('weatherStation') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -24,11 +24,11 @@
         <v-list nav>
           <v-list-item-group>
             <v-list-item to="/">
-              <v-list-item-title>Current Weather</v-list-item-title>
+              <v-list-item-title>{{ $t('currentWeather') }}</v-list-item-title>
             </v-list-item>
 
             <v-list-item to="/forecast">
-              <v-list-item-title>Forecast</v-list-item-title>
+              <v-list-item-title>{{ $t('forecast') }}</v-list-item-title>
             </v-list-item>
           </v-list-item-group>
         </v-list>
@@ -38,23 +38,23 @@
         <v-list nav dense>
           <v-list-item-group>
             <v-list-item to="/temperature">
-              <v-list-item-title>Temperature</v-list-item-title>
+              <v-list-item-title>{{ $t('temperature') }}</v-list-item-title>
             </v-list-item>
 
             <v-list-item to="/humidity">
-              <v-list-item-title>Humidity</v-list-item-title>
+              <v-list-item-title>{{ $t('humidity') }}</v-list-item-title>
             </v-list-item>
 
             <v-list-item to="/rain">
-              <v-list-item-title>Rain</v-list-item-title>
+              <v-list-item-title>{{ $t('rain') }}</v-list-item-title>
             </v-list-item>
 
             <v-list-item to="/wind-direction">
-              <v-list-item-title>Wind Direction</v-list-item-title>
+              <v-list-item-title>{{ $t('windDirection') }}</v-list-item-title>
             </v-list-item>
 
             <v-list-item to="/wind-speed">
-              <v-list-item-title>Wind Speed</v-list-item-title>
+              <v-list-item-title>{{ $t('windSpeed') }}</v-list-item-title>
             </v-list-item>
 
           </v-list-item-group>
@@ -95,6 +95,8 @@ export default Vue.extend({
 
   mixins: [dateParser, weatherStationClient],
   created() {
+    this.$i18n.locale = document.cookie.replace('language=', '')
+    document.title = this.$t('weatherStation')
     this.updateSensorData24()
 
     this.$store.subscribe((mutation, state) => {

@@ -82,7 +82,7 @@ export default {
             labels: this.timeLabels,
             datasets: [
               {
-                label: "Wind Speed",
+                label: this.$t('windSpeed'),
                 borderColor: "#009688",
                 pointBackgroundColor: "#009688",
                 borderWidth: 3,
@@ -91,7 +91,7 @@ export default {
                 data: this.windSpeedData
               },
               {
-                label: "Gust Speed",
+                label: this.$t('gustSpeed'),
                 borderColor: "#00BCD4",
                 pointBackgroundColor: "#00BCD4",
                 borderWidth: 3,
@@ -108,7 +108,7 @@ export default {
               yAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Speed in m/s'
+                  labelString: this.$t('speed') + ' in m/s'
                 },
                 ticks: {
                   min: this.scaleMin,

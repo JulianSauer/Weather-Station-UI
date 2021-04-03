@@ -3,27 +3,27 @@
     <div>
       <table id="weatherTable">
         <tr>
-          <td>Temperature:</td>
+          <td>{{ $t('temperature') }}:</td>
           <td>{{ temperature }}°C</td>
         </tr>
         <tr>
-          <td>Humidity:</td>
+          <td>{{ $t('humidity') }}:</td>
           <td>{{ humidity }}%</td>
         </tr>
         <tr>
-          <td>Wind Speed:</td>
+          <td>{{ $t('windSpeed') }}:</td>
           <td>{{ windSpeed }}m/s</td>
         </tr>
         <tr>
-          <td>Gust Speed:</td>
+          <td>{{ $t('gustSpeed') }}:</td>
           <td>{{ gustSpeed }}m/s</td>
         </tr>
         <tr>
-          <td>Wind Direction:</td>
+          <td>{{ $t('windDirection') }}:</td>
           <td>{{ windDirection }}</td>
         </tr>
         <tr>
-          <td>Rain:</td>
+          <td>{{ $t('rain') }}:</td>
           <td>{{ rain }}mm</td>
         </tr>
       </table>

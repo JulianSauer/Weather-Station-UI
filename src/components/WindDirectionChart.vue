@@ -58,7 +58,7 @@ export default {
             labels: this.windDirectionLabels,
             datasets: [
               {
-                label: "Wind Direction in %",
+                label: this.$t('windDirection') + ' in %',
                 backgroundColor: "rgb(38,166,154, 0.4)",
                 borderColor: "#009688",
                 pointBackgroundColor: "#009688",

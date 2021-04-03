@@ -69,7 +69,7 @@ export default {
             labels: this.timeLabels,
             datasets: [
               {
-                label: "Humidity",
+                label: this.$t('humidity'),
                 borderColor: "#009688",
                 pointBackgroundColor: "#009688",
                 borderWidth: 3,
@@ -86,7 +86,7 @@ export default {
               yAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Humidity in %'
+                  labelString: this.$t('humidity') + ' in %'
                 },
                 ticks: {
                   min: this.scaleMin,

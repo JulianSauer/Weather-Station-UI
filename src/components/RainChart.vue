@@ -69,7 +69,7 @@ export default {
             labels: this.timeLabels,
             datasets: [
               {
-                label: "Rain",
+                label: this.$t('rain'),
                 borderColor: "#009688",
                 pointBackgroundColor: "#009688",
                 borderWidth: 3,
@@ -86,7 +86,7 @@ export default {
               yAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Rain in mm'
+                  labelString: this.$t('rain') + ' in mm'
                 },
                 ticks: {
                   min: this.scaleMin,

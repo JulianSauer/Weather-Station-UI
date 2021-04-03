@@ -92,7 +92,7 @@ export default {
             labels: this.timeLabels,
             datasets: [
               {
-                label: "Temperature",
+                label: this.$t('temperature'),
                 borderColor: "white",
                 pointBackgroundColor: "white",
                 borderWidth: 3,
@@ -109,7 +109,7 @@ export default {
               yAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: 'Temperature in °C'
+                  labelString: this.$t('temperature') + ' in °C'
                 },
                 ticks: {
                   min: this.scaleMin,

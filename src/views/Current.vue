@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card elevation="2" class="my-3 mx-auto" width="256">
-      <v-card-title>Current Weather</v-card-title>
+      <v-card-title>{{ $t('currentWeather') }}</v-card-title>
       <CurrentWeather/>
     </v-card>
     <v-card elevation="2" class="my-3 mx-3">

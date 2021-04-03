@@ -1,10 +1,29 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Current from '@/views/Current.vue'
+import i18n from '@/plugins/i18n';
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
+  {
+    path: '/de',
+    name: 'Language_DE',
+    redirect: () => {
+      i18n.locale = 'de'
+      document.cookie = 'language=de'
+      return '/'
+    }
+  },
+  {
+    path: '/en',
+    name: 'Language_EN',
+    redirect: () => {
+      i18n.locale = 'en'
+      document.cookie = 'language=en'
+      return '/'
+    }
+  },
   {
     path: '/',
     name: 'Current',
