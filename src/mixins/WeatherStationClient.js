@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default {
     methods: {
-        updateStore(store, begin, end) {
+        updateWeatherSensorData(store, begin, end) {
             if (store.begin === begin && store.end === end) {
                 return
             } else {
@@ -15,7 +15,7 @@ export default {
             end = this.formatDate(now, "YYYYMMDD-hhmmss")
 
             axios
-                .get(process.env.VUE_APP_WEATHER_STATION_API, {
+                .get(process.env.VUE_APP_WEATHER_API + process.env.VUE_APP_CURRENT_WEATHER, {
                     params: {
                         begin: begin,
                         end: end
@@ -31,6 +31,18 @@ export default {
                         sensorData: response.data,
                         timeLabels: timeLabels
                     })
+                })
+        },
+        updateForecastData(store, provider) {
+            axios
+                .get(process.env.VUE_APP_WEATHER_API + process.env.VUE_APP_FORECAST, {
+                    params: {
+                        from: provider,
+                        resolution: 'hourly'
+                    }
+                })
+                .then(response => {
+                    store.commit('updateHourlyForecast', response.data)
                 })
         }
     }

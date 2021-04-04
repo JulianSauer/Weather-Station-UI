@@ -13,6 +13,6 @@ export default {
             result = result.replace('mm', dateString.slice(15, 17))
             result = result.replace('ss', dateString.slice(18, 20))
             return result
-        }
+        },
     }
 }

@@ -121,13 +121,10 @@ export default {
 #weatherTable {
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 3px;
 }
 
 td {
   text-align: left;
-}
-
-#lastUpdate {
-  float: right
 }
 </style>

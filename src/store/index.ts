@@ -19,7 +19,12 @@ export default new Vuex.Store({
             }
         }],
         begin: '',
-        end: ''
+        end: '',
+        hourlyForecast: [{
+            timestamp: '',
+            temperature: 0,
+            precipitationProbability: 0
+        }]
     },
     mutations: {
         updateSensorData(state, payload) {
@@ -39,6 +44,10 @@ export default new Vuex.Store({
                 }
                 return 1
             })
+        },
+
+        updateHourlyForecast(state, payload) {
+            state.hourlyForecast = payload
         }
     },
     actions: {},

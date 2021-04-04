@@ -134,7 +134,8 @@ export default Vue.extend({
       let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
       now.setHours(now.getHours() - 24)
       let end = this.formatDate(now, "YYYYMMDD-hhmmss")
-      this.updateStore(store, begin, end)
+      this.updateWeatherSensorData(store, begin, end)
+      this.updateForecastData(store, 'TomorrowIO')
     },
 
     isSmallDevice() {

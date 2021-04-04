@@ -10,6 +10,7 @@ export default new VueI18n({
       weatherStation: 'Weather Station',
       forecast: 'Forecast',
       currentWeather: 'Current Weather',
+      time: 'Time',
       humidity: 'Humidity',
       rain: 'Rain',
       temperature: 'Temperature',
@@ -17,11 +18,13 @@ export default new VueI18n({
       windSpeed: 'Wind Speed',
       gustSpeed: 'Gust Speed',
       speed: 'Speed',
+      precipitationProbability: 'Precipitation Probability',
     },
     de: {
       weatherStation: 'Wetterstation',
       forecast: 'Vorhersage',
       currentWeather: 'Aktuelles Wetter',
+      time: 'Uhrzeit',
       humidity: 'Luftfeuchtigkeit',
       rain: 'Regen',
       temperature: 'Temperatur',
@@ -29,6 +32,7 @@ export default new VueI18n({
       windSpeed: 'Windgeschwindigkeit',
       gustSpeed: 'Böengeschwindigkeit',
       speed: 'Geschwindigkeit',
+      precipitationProbability: 'Regenwahrscheinlichkeit',
     }
   }
 })
