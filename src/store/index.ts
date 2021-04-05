@@ -9,7 +9,7 @@ export default new Vuex.Store({
             timeLabel: '',
             sensorData: {
                 source: '',
-                timestamp: '',
+                timestamp: '19700101-000000',
                 gustSpeed: 0,
                 humidity: 0,
                 rain: 0,
@@ -21,12 +21,12 @@ export default new Vuex.Store({
         begin: '',
         end: '',
         hourlyForecast: [{
-            timestamp: '',
+            timestamp: '19700101-000000',
             temperature: 0,
             precipitationProbability: 0
         }],
         dailyForecast: [{
-            timestamp: '',
+            timestamp: '19700101-000000',
             temperature: 0,
             precipitationProbability: 0
         }]
