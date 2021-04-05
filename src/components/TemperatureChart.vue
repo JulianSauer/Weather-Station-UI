@@ -93,10 +93,7 @@ export default {
             datasets: [
               {
                 label: this.$t('temperature'),
-                borderColor: "white",
-                pointBackgroundColor: "white",
-                borderWidth: 3,
-                pointBorderColor: "white",
+                pointRadius: 0,
                 backgroundColor: this.gradient,
                 data: this.temperatureData
               }

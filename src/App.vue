@@ -71,6 +71,7 @@
 <script>
 import Vue from 'vue';
 import dateParser from "@/mixins/DateParser"
+import scaling from "@/mixins/Scaling"
 import weatherStationClient from "@/mixins/WeatherStationClient"
 import store from '@/store/index'
 
@@ -93,7 +94,7 @@ export default Vue.extend({
     },
   },
 
-  mixins: [dateParser, weatherStationClient],
+  mixins: [dateParser, weatherStationClient, scaling],
   created() {
     this.$i18n.locale = document.cookie.replace('language=', '')
     document.title = this.$t('weatherStation')
@@ -136,10 +137,6 @@ export default Vue.extend({
       let end = this.formatDate(now, "YYYYMMDD-hhmmss")
       this.updateWeatherSensorData(store, begin, end)
       this.updateForecastData(store, 'TomorrowIO')
-    },
-
-    isSmallDevice() {
-      return this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm'
     },
   }
 });

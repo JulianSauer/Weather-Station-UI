@@ -15,6 +15,9 @@ export default {
                 return max
             }
             return value
+        },
+        isSmallDevice() {
+            return this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm'
         }
     }
 }

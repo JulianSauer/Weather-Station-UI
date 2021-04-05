@@ -10,6 +10,7 @@ export default {
 
   data() {
     return {
+      borderWidth: 0,
       timeLabels: [],
       windSpeedGradient: null,
       windSpeedData: [],
@@ -25,6 +26,9 @@ export default {
       this.loadDataFromStore()
       this.updateChart()
     });
+    if (this.isSmallDevice()) {
+      this.borderWidth = 0
+    }
   },
 
   mounted() {
@@ -85,7 +89,7 @@ export default {
                 label: this.$t('windSpeed'),
                 borderColor: "#009688",
                 pointBackgroundColor: "#009688",
-                borderWidth: 3,
+                borderWidth: this.borderWidth,
                 pointBorderColor: "#009688",
                 backgroundColor: this.windSpeedGradient,
                 data: this.windSpeedData
@@ -94,7 +98,7 @@ export default {
                 label: this.$t('gustSpeed'),
                 borderColor: "#00BCD4",
                 pointBackgroundColor: "#00BCD4",
-                borderWidth: 3,
+                borderWidth: this.borderWidth,
                 pointBorderColor: "#00BCD4",
                 backgroundColor: this.gustSpeedGradient,
                 data: this.gustSpeedData

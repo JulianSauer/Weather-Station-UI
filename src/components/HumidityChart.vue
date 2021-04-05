@@ -10,6 +10,7 @@ export default {
 
   data() {
     return {
+      borderWidth: 5,
       gradient: null,
       scaleMin: 0,
       scaleMax: 100,
@@ -23,6 +24,9 @@ export default {
       this.loadDataFromStore()
       this.updateChart()
     });
+    if (this.isSmallDevice()) {
+      this.borderWidth = 1
+    }
   },
 
   mounted() {
@@ -72,7 +76,7 @@ export default {
                 label: this.$t('humidity'),
                 borderColor: "#009688",
                 pointBackgroundColor: "#009688",
-                borderWidth: 3,
+                borderWidth: this.borderWidth,
                 pointBorderColor: "#009688",
                 backgroundColor: this.gradient,
                 data: this.humidityData
