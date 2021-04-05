@@ -24,6 +24,11 @@ export default new Vuex.Store({
             timestamp: '',
             temperature: 0,
             precipitationProbability: 0
+        }],
+        dailyForecast: [{
+            timestamp: '',
+            temperature: 0,
+            precipitationProbability: 0
         }]
     },
     mutations: {
@@ -48,6 +53,10 @@ export default new Vuex.Store({
 
         updateHourlyForecast(state, payload) {
             state.hourlyForecast = payload
+        },
+
+        updateDailyForecast(state, payload) {
+            state.dailyForecast = payload
         }
     },
     actions: {},

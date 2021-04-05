@@ -44,6 +44,16 @@ export default {
                 .then(response => {
                     store.commit('updateHourlyForecast', response.data)
                 })
+            axios
+                .get(process.env.VUE_APP_WEATHER_API + process.env.VUE_APP_FORECAST, {
+                    params: {
+                        from: provider,
+                        resolution: 'daily'
+                    }
+                })
+                .then(response => {
+                    store.commit('updateDailyForecast', response.data)
+                })
         }
     }
 }
