@@ -71,7 +71,7 @@ export default {
       this.gustSpeed = store.state.sortedSensorData[0].sensorData.gustSpeed
       this.humidity = store.state.sortedSensorData[0].sensorData.humidity
       this.rain = store.state.sortedSensorData[0].sensorData.rain
-      this.windDirection = store.state.sortedSensorData[0].sensorData.windDirection
+      this.windDirection = this.convertDirection(store.state.sortedSensorData[0].sensorData.windDirection)
       this.windSpeed = store.state.sortedSensorData[0].sensorData.windSpeed
     },
 

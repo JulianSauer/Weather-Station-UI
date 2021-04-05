@@ -9,6 +9,8 @@ export default new VueI18n({
     en: {
       weatherStation: 'Weather Station',
       forecast: 'Forecast',
+      hourlyForecast: 'Hourly Forecast',
+      dailyForecast: 'Daily Forecast',
       currentWeather: 'Current Weather',
       time: 'Time',
       humidity: 'Humidity',
@@ -23,6 +25,8 @@ export default new VueI18n({
     de: {
       weatherStation: 'Wetterstation',
       forecast: 'Vorhersage',
+      hourlyForecast: 'Stündliche Vorhersage',
+      dailyForecast: 'Tägliche Vorhersage',
       currentWeather: 'Aktuelles Wetter',
       time: 'Uhrzeit',
       humidity: 'Luftfeuchtigkeit',

@@ -3,17 +3,17 @@
 
     <v-layout row mx-0 my-0>
 
-      <v-flex xs12 sm12 md5 lg3 xl2>
+      <v-flex xs12 sm6 md5 lg3 xl2>
         <v-card elevation="2" class="mx-3 my-3">
           <v-card-title>{{ $t('currentWeather') }}</v-card-title>
           <CurrentWeather/>
         </v-card>
       </v-flex>
 
-      <v-flex xs12 sm12 md5 lg3 xl2>
+      <v-flex xs12 sm6 md5 lg3 xl2>
         <v-card elevation="2" class="mx-3 my-3">
-          <v-card-title>{{ $t('forecast') }}</v-card-title>
-          <WeatherForecastShort/>
+          <v-card-title>{{ $t('hourlyForecast') }}</v-card-title>
+          <WeatherForecastHourlyShort/>
         </v-card>
       </v-flex>
     </v-layout>
@@ -31,14 +31,14 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import CurrentWeather from '@/components/CurrentWeather.vue';
-import WeatherForecastShort from '@/components/WeatherForecastShort.vue';
+import WeatherForecastHourlyShort from '@/components/WeatherForecastHourlyShort.vue';
 import TemperatureChart from '@/components/TemperatureChart.vue';
 import WindSpeedChart from '@/components/WindSpeedChart.vue';
 
 @Component({
   components: {
     CurrentWeather: CurrentWeather,
-    WeatherForecastShort: WeatherForecastShort,
+    WeatherForecastHourlyShort: WeatherForecastHourlyShort,
     TemperatureChart: TemperatureChart,
     WindSpeedChart: WindSpeedChart,
   },

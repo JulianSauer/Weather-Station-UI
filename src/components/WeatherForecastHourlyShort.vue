@@ -4,9 +4,9 @@
       <template v-slot:default>
         <thead>
         <tr>
-          <th>{{ $t('time') }}</th>
-          <th>{{ $t('temperature') }}</th>
-          <th>{{ $t('precipitationProbability') }}</th>
+          <th><v-icon>mdi-clock-outline</v-icon></th>
+          <th><v-icon>mdi-thermometer</v-icon></th>
+          <th><v-icon>mdi-water</v-icon></th>
         </tr>
         </thead>
         <tbody>
@@ -70,3 +70,9 @@ export default {
   }
 }
 </script>
+
+<style>
+th {
+  text-align: center;
+}
+</style>
