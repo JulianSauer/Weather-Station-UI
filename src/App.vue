@@ -78,8 +78,7 @@ import store from '@/store/index'
 export default Vue.extend({
   name: 'App',
 
-  components: {
-  },
+  components: {},
 
   data() {
     return {
@@ -97,6 +96,9 @@ export default Vue.extend({
   mixins: [dateParser, weatherStationClient, scaling],
   created() {
     this.$i18n.locale = document.cookie.replace('language=', '')
+    if (this.$i18n.locale === '') {
+      this.$router.push('/en').catch(_ => {})
+    }
     document.title = this.$t('weatherStation')
     this.updateSensorData24()
 
