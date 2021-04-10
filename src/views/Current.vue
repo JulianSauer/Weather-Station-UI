@@ -1,29 +1,30 @@
 <template>
   <div>
 
-    <v-layout row mx-0 my-0>
+    <v-row class="mx-auto my-auto">
 
-      <v-flex xs12 sm6 md4 lg3 xl2>
-        <v-card elevation="2" class="mx-3 my-3" :loading="currentWeatherLoading">
+      <v-col xs="12" sm="6" md="4" lg="3" xl="2">
+        <v-card elevation="2" :loading="currentWeatherLoading">
           <v-card-title>{{ $t('currentWeather') }}</v-card-title>
           <CurrentWeather/>
         </v-card>
-      </v-flex>
+      </v-col>
 
-      <v-flex xs12 sm6 md4 lg3 xl2>
-        <v-card elevation="2" class="mx-3 my-3" :loading="hourlyForecastLoading">
+      <v-col xs="12" sm="6" md="4" lg="3" xl="2">
+        <v-card elevation="2" :loading="hourlyForecastLoading">
           <v-card-title>{{ $t('hourlyForecast') }}</v-card-title>
           <WeatherForecastHourlyShort/>
         </v-card>
-      </v-flex>
+      </v-col>
 
-      <v-flex xs12 sm6 md4 lg3 xl2>
-        <v-card elevation="2" class="mx-3 my-3" :loading="dailyForecastLoading">
+      <v-col xs="12" sm="6" md="4" lg="3" xl="2">
+        <v-card elevation="2" :loading="dailyForecastLoading">
           <v-card-title>{{ $t('dailyForecast') }}</v-card-title>
           <WeatherForecastDailyShort/>
         </v-card>
-      </v-flex>
-    </v-layout>
+      </v-col>
+
+    </v-row>
 
 
     <v-card elevation="2" class="my-3 mx-3">
@@ -56,7 +57,8 @@ export default class Current extends Vue {
   currentWeatherLoading = 'teal'
   hourlyForecastLoading = 'teal'
   dailyForecastLoading = 'teal'
-  unsubscribe = function () { };
+  unsubscribe = function () {
+  };
 
   created(): void {
     this.unsubscribe = this.$store.subscribe((_, state) => {
