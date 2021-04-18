@@ -27,7 +27,12 @@ export default {
                         let date = this.convertStringToDate(response.data[i].timestamp)
                         timeLabels.push(this.formatDate(date, "hh:mm"))
                         // Convert direction in which the wind is blowing into the direction it's coming from
-                        response.data[i].windDirection = (response.data[i].windDirection + 180) % 360
+                        response.data[i].gustSpeed = parseFloat(response.data[i].gustSpeed[0])
+                        response.data[i].humidity = parseFloat(response.data[i].humidity[0])
+                        response.data[i].rain = parseFloat(response.data[i].rain[0])
+                        response.data[i].temperature = parseFloat(response.data[i].temperature[0])
+                        response.data[i].windSpeed = parseFloat(response.data[i].windSpeed[0])
+                        response.data[i].windDirection = (parseFloat(response.data[i].windDirection[0]) + 180) % 360
                     }
                     store.commit('updateSensorData', {
                         sensorData: response.data,

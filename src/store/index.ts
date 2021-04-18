@@ -15,7 +15,8 @@ export default new Vuex.Store({
                 rain: 0,
                 temperature: 0,
                 windDirection: 0,
-                windSpeed: 0
+                windSpeed: 0,
+                dataFor: []
             }
         }],
         begin: '',
