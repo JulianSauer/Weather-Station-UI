@@ -2,29 +2,22 @@ import axios from "axios";
 
 export default {
     methods: {
-        updateWeatherSensorData(store, begin, end) {
-            if (store.begin === begin && store.end === end) {
+        updateWeatherSensorData(store, from, to) {
+            if (store.to === to && store.from === from) {
                 return
-            } else {
-                store.begin = begin
-                store.end = end
             }
-            let now = new Date()
-            begin = this.formatDate(now, "YYYYMMDD-hhmmss")
-            now.setHours(now.getHours() - 10)
-            end = this.formatDate(now, "YYYYMMDD-hhmmss")
 
             axios
                 .get(process.env.VUE_APP_WEATHER_API + process.env.VUE_APP_CURRENT_WEATHER, {
                     params: {
-                        begin: begin,
-                        end: end
+                        begin: to,
+                        end: from
                     }
                 })
                 .then(response => {
                     let timeLabels = []
                     for (let i in response.data) {
-                        let date = this.convertStringToDate(response.data[i].timestamp)
+                        let date = this.convertStringToDate(response.data[i].timestamp, 'YYYYMMDD-hhmmss')
                         timeLabels.push(this.formatDate(date, "hh:mm"))
                         // Convert direction in which the wind is blowing into the direction it's coming from
                         response.data[i].gustSpeed = parseFloat(response.data[i].gustSpeed[0])
@@ -36,7 +29,9 @@ export default {
                     }
                     store.commit('updateSensorData', {
                         sensorData: response.data,
-                        timeLabels: timeLabels
+                        timeLabels: timeLabels,
+                        from: from,
+                        to: to
                     })
                 })
         },

@@ -100,7 +100,7 @@ export default {
       this.hourlyForecast = new Array(forecast.length)
       for (let i = 0; i < forecast.length; i++) {
         let entry = forecast[i]
-        let date = this.convertStringToDate(entry.timestamp)
+        let date = this.convertStringToDate(entry.timestamp, 'YYYYMMDD-hhmmss')
         this.hourlyForecast[i] = {
           timestamp: this.formatDate(date, 'hh:mm'),
           temperature: forecast[i].temperature,
@@ -114,7 +114,7 @@ export default {
       this.dailyForecast = new Array(forecast.length)
       for (let i = 0; i < forecast.length; i++) {
         let entry = forecast[i]
-        let date = this.convertStringToDate(entry.timestamp)
+        let date = this.convertStringToDate(entry.timestamp, 'YYYYMMDD-hhmmss')
         this.dailyForecast[i] = {
           timestamp: this.formatDate(date, 'DD.MM'),
           temperature: forecast[i].temperature,

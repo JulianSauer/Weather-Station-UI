@@ -1,7 +1,10 @@
 export default {
     methods: {
-        convertStringToDate: function (t) { // Format: YYYYMMDD-hhmmss
-            return new Date(t.slice(0, 4) + '-' + t.slice(4, 6) + '-' + t.slice(6, 8) + 'T' + t.slice(9, 11) + ':' + t.slice(11, 13) + ':' + t.slice(13, 15))
+        convertStringToDate: function (t, format) {
+            if (format === 'YYYYMMDD-hhmmss')
+                return new Date(t.slice(0, 4) + '-' + t.slice(4, 6) + '-' + t.slice(6, 8) + 'T' + t.slice(9, 11) + ':' + t.slice(11, 13) + ':' + t.slice(13, 15))
+            if (format === 'YYYY-MM-DD hh:mm:ss')
+                return new Date(t.slice(0, 10) + 'T' + t.slice(11, 19))
         },
         formatDate(date, format) {
             let dateString = date.toLocaleString('de-DE', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}) // DD.MM.YYYY, hh:mm:ss

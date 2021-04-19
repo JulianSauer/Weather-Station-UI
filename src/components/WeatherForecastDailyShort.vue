@@ -59,7 +59,7 @@ export default {
       this.forecast = new Array(forecast.length)
       for (let i = 0; i < forecast.length; i++) {
         let entry = forecast[i]
-        let date = this.convertStringToDate(entry.timestamp)
+        let date = this.convertStringToDate(entry.timestamp, 'YYYYMMDD-hhmmss')
         this.forecast[i] = {
           timestamp: this.formatDate(date, 'DD.MM'),
           temperature: forecast[i].temperature,

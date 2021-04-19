@@ -103,7 +103,7 @@ export default Vue.extend({
     this.updateSensorData24()
 
     this.$store.subscribe((mutation, state) => {
-      let dateAndTime = this.convertStringToDate(state.sortedSensorData[0].sensorData.timestamp)
+      let dateAndTime = this.convertStringToDate(state.sortedSensorData[0].sensorData.timestamp, 'YYYYMMDD-hhmmss')
       this.timestamp =
           dateAndTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
           + ' (' +
@@ -134,10 +134,12 @@ export default Vue.extend({
 
     updateSensorData24() {
       let now = new Date()
-      let begin = this.formatDate(now, "YYYYMMDD-hhmmss")
-      now.setHours(now.getHours() - 24)
-      let end = this.formatDate(now, "YYYYMMDD-hhmmss")
-      this.updateWeatherSensorData(store, begin, end)
+      let to = this.formatDate(now, "YYYYMMDD-hhmmss")
+      now.setHours(0)
+      now.setMinutes(0)
+      now.setSeconds(0)
+      let from = this.formatDate(now, "YYYYMMDD-hhmmss")
+      this.updateWeatherSensorData(store, from, to)
       this.updateForecastData(store, 'TomorrowIO')
     },
   }

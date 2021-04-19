@@ -19,8 +19,8 @@ export default new Vuex.Store({
                 dataFor: []
             }
         }],
-        begin: '',
-        end: '',
+        to: '',
+        from: '',
         hourlyForecast: [{
             timestamp: '19700101-000000',
             temperature: 0,
@@ -50,6 +50,9 @@ export default new Vuex.Store({
                 }
                 return 1
             })
+
+            state.from = payload.from
+            state.to = payload.to
         },
 
         updateHourlyForecast(state, payload) {
