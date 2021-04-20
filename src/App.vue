@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-app-bar app color="teal" dark>
+      <v-app-bar app color="teal" dark id="appbar">
         <v-app-bar-nav-icon @click.stop="navigationDrawer = !navigationDrawer"></v-app-bar-nav-icon>
         <span v-if="!isSmallDevice()" class="mr-2">{{ $t('weatherStation') }}</span>
         <v-spacer></v-spacer>

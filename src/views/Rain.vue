@@ -1,18 +1,54 @@
 <template>
-  <div style="height: 100%; padding: 10px;">
-    <RainChart style="height: 100%;"/>
+  <div style="height: 100%; padding: 12px">
+
+    <v-card elevation="2">
+      <SensorDatePicker/>
+    </v-card>
+
+    <v-card elevation="2" :style="chartHeight" class="mt-3">
+      <RainChart style="height: 100%"/>
+    </v-card>
+
   </div>
 </template>
 
-<script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+<script>
+import Vue from 'vue';
 import RainChart from '@/components/RainChart.vue';
+import SensorDatePicker from "@/components/SensorDatePicker";
 
-@Component({
+export default Vue.extend({
   components: {
     RainChart: RainChart,
+    SensorDatePicker: SensorDatePicker
   },
+
+  data() {
+    return {
+      chartHeight: 'height: 300px'
+    }
+  },
+
+  created() {
+    window.addEventListener('resize', this.resizeChart)
+  },
+
+  mounted() {
+    this.resizeChart()
+  },
+
+  destroyed() {
+    window.removeEventListener("resize", this.resizeChart)
+  },
+
+  methods: {
+    resizeChart() {
+      let appbarHeight = document.getElementById('appbar').clientHeight
+      let padding = 36
+      let datePicker = 114
+      let height = window.innerHeight - padding - datePicker - appbarHeight
+      this.chartHeight = 'height: ' + height + 'px'
+    }
+  }
 })
-export default class Rain extends Vue {
-}
 </script>
