@@ -22,6 +22,9 @@ export default new VueI18n({
       gustSpeed: 'Gust Speed',
       speed: 'Speed',
       precipitationProbability: 'Precipitation Probability',
+      from: 'from',
+      to: 'to',
+      invalidDateError: 'Invalid date interval'
     },
     de: {
       weatherStation: 'Wetterstation',
@@ -39,6 +42,9 @@ export default new VueI18n({
       gustSpeed: 'Böengeschwindigkeit',
       speed: 'Geschwindigkeit',
       precipitationProbability: 'Regenwahrscheinlichkeit',
+      from: 'von',
+      to: 'bis',
+      invalidDateError: 'Ungültiges Datumsinterval'
     }
   }
 })
