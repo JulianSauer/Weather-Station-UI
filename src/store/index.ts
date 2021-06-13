@@ -21,16 +21,20 @@ export default new Vuex.Store({
         }],
         to: '',
         from: '',
-        hourlyForecast: [{
-            timestamp: '19700101-000000',
-            temperature: 0,
-            precipitationProbability: 0
-        }],
-        dailyForecast: [{
-            timestamp: '19700101-000000',
-            temperature: 0,
-            precipitationProbability: 0
-        }]
+        hourlyForecast: {
+            source: 'TomorrowIO-Hourly',
+            timestamp: 'latest',
+            temperature: [],
+            rain: [],
+            dataFor: []
+        },
+        dailyForecast: {
+            source: 'TomorrowIO-Daily',
+            timestamp: 'latest',
+            temperature: [],
+            rain: [],
+            dataFor: []
+        }
     },
     mutations: {
         updateSensorData(state, payload) {

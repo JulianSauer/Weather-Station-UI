@@ -56,14 +56,13 @@ export default {
 
     loadDataFromStore() {
       let forecast = this.$store.state.dailyForecast
-      this.forecast = new Array(forecast.length)
-      for (let i = 0; i < forecast.length; i++) {
-        let entry = forecast[i]
-        let date = this.convertStringToDate(entry.timestamp, 'YYYYMMDD-hhmmss')
+      this.forecast = new Array(forecast.dataFor.length)
+      for (let i = 0; i < forecast.dataFor.length; i++) {
+        let date = this.convertStringToDate(forecast.dataFor[i], 'YYYYMMDD-hhmmss')
         this.forecast[i] = {
           timestamp: this.formatDate(date, 'DD.MM'),
-          temperature: forecast[i].temperature,
-          precipitationProbability: forecast[i].precipitationProbability
+          temperature: forecast.temperature[i],
+          precipitationProbability: forecast.rain[i]
         }
       }
     },

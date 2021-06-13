@@ -10,42 +10,24 @@ sensor_data = [
     {"source": "WeatherStation", "timestamp": "20210418-223000", "temperature": ["11.3"], "humidity":["70"], "windSpeed":["1.7"], "gustSpeed":["2.0"], "rain":["168.9"], "windDirection":["180.0"], "dataFor":["20210418-223000"]}
 ]
 
-forecast_hourly = [
-    {"timestamp": "20210404-180000", "temperature": 7.43, "precipitationProbability": 0},
-    {"timestamp": "20210404-190000", "temperature": 7.25, "precipitationProbability": 0},
-    {"timestamp": "20210404-200000", "temperature": 6.27, "precipitationProbability": 0},
-    {"timestamp": "20210404-210000", "temperature": 5.04, "precipitationProbability": 0},
-    {"timestamp": "20210404-220000", "temperature": 4.05, "precipitationProbability": 0},
-    {"timestamp": "20210404-230000", "temperature": 3.52, "precipitationProbability": 0},
-    {"timestamp": "20210405-000000", "temperature": 3.15, "precipitationProbability": 0},
-    {"timestamp": "20210405-010000", "temperature": 3.02, "precipitationProbability": 0},
-    {"timestamp": "20210405-020000", "temperature": 2.88, "precipitationProbability": 0},
-    {"timestamp": "20210405-030000", "temperature": 3.12, "precipitationProbability": 0},
-    {"timestamp": "20210405-040000", "temperature": 3.75, "precipitationProbability": 0},
-    {"timestamp": "20210405-050000", "temperature": 4.01, "precipitationProbability": 5},
-    {"timestamp": "20210405-060000", "temperature": 4.21, "precipitationProbability": 15},
-    {"timestamp": "20210405-070000", "temperature": 4.29, "precipitationProbability": 30},
-    {"timestamp": "20210405-080000", "temperature": 4.79, "precipitationProbability": 40},
-    {"timestamp": "20210405-090000", "temperature": 5.48, "precipitationProbability": 50},
-    {"timestamp": "20210405-100000", "temperature": 5.22, "precipitationProbability": 55},
-    {"timestamp": "20210405-110000", "temperature": 3.41, "precipitationProbability": 50},
-    {"timestamp": "20210405-120000", "temperature": 3.27, "precipitationProbability": 45},
-    {"timestamp": "20210405-130000", "temperature": 3.75, "precipitationProbability": 35},
-    {"timestamp": "20210405-140000", "temperature": 4.28, "precipitationProbability": 20},
-    {"timestamp": "20210405-150000", "temperature": 4.66, "precipitationProbability": 10},
-    {"timestamp": "20210405-160000", "temperature": 4.63, "precipitationProbability": 5},
-    {"timestamp": "20210405-170000", "temperature": 3.96, "precipitationProbability": 5},
-    {"timestamp": "20210405-180000", "temperature": 3.28, "precipitationProbability": 5}
-]
+forecast_hourly = {
+    "source": "TomorrowIO-Hourly",
+    "timestamp": "latest",
+    "temperature": ["11.6", "10.8", "10.1", "9.6", "9.3", "9.2", "9.0", "10.4", "12.4", "14.2", "15.6", "16.8", "18.1", "19.1", "20.2", "21.1", "21.7", "22.0", "22.0", "21.8", "21.2", "19.6", "17.3",
+                    "15.6", "15.0"],
+    "rain": ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "5", "15", "30", "40", "50", "55", "50", "45", "35", "20", "10", "5", "5", "5"],
+    "dataFor": ["20210613-000000", "20210613-010000", "20210613-020000", "20210613-030000", "20210613-040000", "20210613-050000", "20210613-060000", "20210613-070000",
+                "20210613-080000", "20210613-090000", "20210613-100000", "20210613-110000", "20210613-120000", "20210613-130000", "20210613-140000", "20210613-150000",
+                "20210613-160000", "20210613-170000", "20210613-180000", "20210613-190000", "20210613-200000", "20210613-210000", "20210613-220000", "20210613-230000",
+                "20210614-000000"]}
 
-forecast_daily = [
-    {"timestamp": "20210404-060000", "temperature": 7.81, "precipitationProbability": 5},
-    {"timestamp": "20210405-060000", "temperature": 5.48, "precipitationProbability": 55},
-    {"timestamp": "20210406-060000", "temperature": 4.44, "precipitationProbability": 50},
-    {"timestamp": "20210407-060000", "temperature": 6.6, "precipitationProbability": 65},
-    {"timestamp": "20210408-060000", "temperature": 10.29, "precipitationProbability": 55},
-    {"timestamp": "20210409-060000", "temperature": 9.07, "precipitationProbability": 5}
-]
+forecast_daily = {
+    "source": "TomorrowIO-Daily",
+    "timestamp": "latest",
+    "temperature": ["7.8", "5.4", "4.4", "6.6", "10.2", "9.0"],
+    "rain": ["5", "55", "50", "65", "55", "5"],
+    "dataFor": ["20210612-060000", "20210613-060000", "20210614-060000", "20210615-060000", "20210616-060000", "20210617-060000"]
+}
 
 api = Flask(__name__)
 

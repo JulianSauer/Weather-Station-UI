@@ -97,28 +97,26 @@ export default {
 
     loadHourlyForecastFromStore() {
       let forecast = this.$store.state.hourlyForecast
-      this.hourlyForecast = new Array(forecast.length)
-      for (let i = 0; i < forecast.length; i++) {
-        let entry = forecast[i]
-        let date = this.convertStringToDate(entry.timestamp, 'YYYYMMDD-hhmmss')
+      this.hourlyForecast = new Array(forecast.dataFor.length)
+      for (let i = 0; i < forecast.dataFor.length; i++) {
+        let date = this.convertStringToDate(forecast.dataFor[i], 'YYYYMMDD-hhmmss')
         this.hourlyForecast[i] = {
           timestamp: this.formatDate(date, 'hh:mm'),
-          temperature: forecast[i].temperature,
-          precipitationProbability: forecast[i].precipitationProbability
+          temperature: forecast.temperature[i],
+          precipitationProbability: forecast.rain[i]
         }
       }
     },
 
     loadDailyForecastFromStore() {
       let forecast = this.$store.state.dailyForecast
-      this.dailyForecast = new Array(forecast.length)
-      for (let i = 0; i < forecast.length; i++) {
-        let entry = forecast[i]
-        let date = this.convertStringToDate(entry.timestamp, 'YYYYMMDD-hhmmss')
+      this.dailyForecast = new Array(forecast.dataFor.length)
+      for (let i = 0; i < forecast.dataFor.length; i++) {
+        let date = this.convertStringToDate(forecast.dataFor[i], 'YYYYMMDD-hhmmss')
         this.dailyForecast[i] = {
           timestamp: this.formatDate(date, 'DD.MM'),
-          temperature: forecast[i].temperature,
-          precipitationProbability: forecast[i].precipitationProbability
+          temperature: forecast.temperature[i],
+          precipitationProbability: forecast.rain[i]
         }
       }
     },

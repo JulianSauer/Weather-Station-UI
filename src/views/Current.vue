@@ -65,10 +65,10 @@ export default class Current extends Vue {
       if (state.sortedSensorData.length > 1) {
         this.currentWeatherLoading = 'false'
       }
-      if (state.hourlyForecast.length > 1) {
+      if (state.hourlyForecast.dataFor.length > 1) {
         this.hourlyForecastLoading = 'false'
       }
-      if (state.dailyForecast.length > 1) {
+      if (state.dailyForecast.dataFor.length > 1) {
         this.dailyForecastLoading = 'false'
       }
     })
