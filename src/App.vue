@@ -95,10 +95,7 @@ export default Vue.extend({
 
   mixins: [dateParser, weatherStationClient, scaling],
   created() {
-    this.$i18n.locale = document.cookie.replace('language=', '')
-    if (this.$i18n.locale === '') {
-      this.$router.push('/en').catch(_ => {})
-    }
+    this.updateLanguage()
     document.title = this.$t('weatherStation')
     this.updateSensorData24()
 
@@ -142,6 +139,17 @@ export default Vue.extend({
       this.updateWeatherSensorData(store, from, to)
       this.updateForecastData(store, 'TomorrowIO')
     },
+
+    updateLanguage() {
+      this.$i18n.locale = document.cookie.replace('language=', '')
+      if (this.$i18n.locale === '') {
+        if (navigator.language === 'de-DE') {
+          this.$router.push('/de').catch(_ => {})
+        } else {
+          this.$router.push('/en').catch(_ => {})
+        }
+      }
+    }
   }
 });
 </script>
